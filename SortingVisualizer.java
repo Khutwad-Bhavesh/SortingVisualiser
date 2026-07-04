@@ -83,15 +83,6 @@ public class SortingVisualizer extends JFrame {
         statsLabel.setForeground(Theme.TEXT);
         rightPanel.add(statsLabel);
 
-        // Small rounded square sound button
-        JButton soundBtn = ControlPanel.makeButton("🔊", Theme.BAR_BASE);
-        soundBtn.setPreferredSize(new Dimension(32, 32));
-        soundBtn.addActionListener(e -> {
-            boolean active = !ctx.soundPlayer.isEnabled();
-            ctx.soundPlayer.setEnabled(active);
-            soundBtn.setText(active ? "🔊" : "🔇");
-        });
-        rightPanel.add(soundBtn);
 
         // Small rounded square heart button linking to GitHub
         JButton heartBtn = ControlPanel.makeButton("❤", new Color(255, 75, 140));

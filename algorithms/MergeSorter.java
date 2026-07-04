@@ -46,7 +46,6 @@ public class MergeSorter extends AbstractSorter {
             ctx.arr[l + x]        = tmp[x];
             ctx.colorState[l + x] = 1;
             ctx.swaps++;
-            ctx.soundPlayer.playSwap();
             repaintAndSleep();
             ctx.colorState[l + x] = 0;
         }

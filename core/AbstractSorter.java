@@ -26,7 +26,6 @@ public abstract class AbstractSorter {
         ctx.colorState[i] = 1;
         ctx.colorState[j] = 1;
         ctx.comparisons++;
-        ctx.soundPlayer.playCompare(ctx.arr[i]);
         repaintAndSleep();
         ctx.colorState[i] = prevI;
         ctx.colorState[j] = prevJ;
@@ -41,7 +40,6 @@ public abstract class AbstractSorter {
         ctx.colorState[i] = 1;
         ctx.colorState[j] = 1;
         ctx.swaps++;
-        ctx.soundPlayer.playSwap();
         repaintAndSleep();
         ctx.colorState[i] = prevJ;
         ctx.colorState[j] = prevI;

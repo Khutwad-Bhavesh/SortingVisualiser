@@ -31,7 +31,6 @@ public class InsertionSorter extends AbstractSorter {
                     ctx.colorState[j + 1] = 1;
                     ctx.arr[j + 1] = ctx.arr[j];
                     ctx.swaps++;
-                    ctx.soundPlayer.playSwap();
                     repaintAndSleep();
                     ctx.colorState[j] = 0;
                     ctx.colorState[j + 1] = 0;

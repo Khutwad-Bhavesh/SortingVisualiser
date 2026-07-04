@@ -1,6 +1,5 @@
 package sortingvisualizer.core;
 
-import sortingvisualizer.utils.SoundPlayer;
 
 /**
  * Shared mutable state passed to every sorting algorithm.
@@ -8,7 +7,6 @@ import sortingvisualizer.utils.SoundPlayer;
  */
 public class SortContext {
 
-    public final SoundPlayer soundPlayer = new SoundPlayer();
     public int[] arr;
     public int[] colorState;// 0=base 1=compare 2=sorted 3=pivot
     public volatile boolean sorting;

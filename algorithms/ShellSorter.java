@@ -31,7 +31,6 @@ public class ShellSorter extends AbstractSorter {
                         ctx.colorState[j] = 1;
                         ctx.arr[j] = ctx.arr[j - gap];
                         ctx.swaps++;
-                        ctx.soundPlayer.playSwap();
                         repaintAndSleep();
                         ctx.colorState[j - gap] = 0;
                         ctx.colorState[j] = 0;
