@@ -2,8 +2,6 @@ name: Build Windows EXE
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
 
 jobs:
   build:
@@ -12,29 +10,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "24"
+          java-version: '24'
 
       - name: Compile
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Force -Path out
-          Get-ChildItem -Recurse -Filter *.java | ForEach-Object {
-              $_.FullName
-          } | Out-File sources.txt
+          mkdir out
+          $files = Get-ChildItem -Recurse -Filter *.java | % { $_.FullName }
+          javac -encoding UTF-8 -d out $files
 
-          javac -d out @sources.txt
-
-      - name: Build Jar
+      - name: Create Jar
         shell: pwsh
         run: |
-          jar --create `
-              --file SortingVisualizer.jar `
-              --main-class SortingVisualizer `
-              -C out .
+          jar --create --file SortingVisualizer.jar --main-class SortingVisualizer -C out .
 
       - name: Build EXE
         shell: pwsh
@@ -47,8 +38,7 @@ jobs:
             --main-class SortingVisualizer `
             --icon logo.ico
 
-      - name: Upload Installer
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
-          name: SortingVisualizer-Windows
+          name: SortingVisualizer
           path: "*.exe"
