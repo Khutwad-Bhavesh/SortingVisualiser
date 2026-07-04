@@ -1,9 +1,9 @@
 name: Build Windows EXE
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
+  push:
+    branches: [main]
 
 jobs:
   build:
@@ -12,27 +12,42 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup JDK 24
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '24'
+          java-version: "24"
 
-      - name: Build JAR
+      - name: Compile
+        shell: pwsh
         run: |
-          javac -d out src/*.java
-          jar --create --file SortingVisualizer.jar --main-class=Main -C out .
+          New-Item -ItemType Directory -Force -Path out
+          Get-ChildItem -Recurse -Filter *.java | ForEach-Object {
+              $_.FullName
+          } | Out-File sources.txt
 
-      - name: Package EXE
+          javac -d out @sources.txt
+
+      - name: Build Jar
+        shell: pwsh
+        run: |
+          jar --create `
+              --file SortingVisualizer.jar `
+              --main-class SortingVisualizer `
+              -C out .
+
+      - name: Build EXE
+        shell: pwsh
         run: |
           jpackage `
             --type exe `
             --name SortingVisualizer `
             --input . `
             --main-jar SortingVisualizer.jar `
-            --main-class Main
+            --main-class SortingVisualizer `
+            --icon logo.ico
 
-      - name: Upload Artifact
+      - name: Upload Installer
         uses: actions/upload-artifact@v4
         with:
           name: SortingVisualizer-Windows
